@@ -3,6 +3,7 @@ import random
 import time
 import constants
 from disjoint_set import DisjointSet
+from collections import deque
 
 # Initializing Pygame (for Maze Visuals)
 pygame.init()
@@ -68,9 +69,59 @@ class MazeGenerator:
                 self.draw_grid()
                 time.sleep(constants.STEP_DELAY)
     
+    def bfs(self):
+        # init adjacency list
+        adj_dict = {}
+        for i in range(self.width * self.height):
+            adj_dict[i] = []
+        for u, v in self.maze_edges:
+            adj_dict[u].append(v)
+        start_square = self.start[0] + (self.start[1] * self.width)
+        end_square   = self.end[0] + (self.width * self.end[1])
+        seen = {start_square: None}
+        
+        # bfs start
+        q = deque([start_square])
+        while q:
+            u = q.popleft()
+            if u == end_square:
+                break
+            for neighbor_node in adj_dict[u]:
+                # print("neighbor node: ", neighbor_node)
+                if neighbor_node not in seen:
+                    seen[neighbor_node] = u
+                    q.append(neighbor_node)
+                else:
+                    continue
+                    # print("node seen already: ", neighbor_node)
+
+        # return path that bfs takes from start to end
+        path = []
+        while end_square != None:
+            path.append(end_square)
+            end_square = seen[end_square]
+        return path
+
+    def draw_bfs_path(self):
+        path_arr = []
+        path = self.bfs() 
+        for square in path:
+            # coords for center of cells
+            x = (square % self.width) * constants.CELL_SIZE + (constants.CELL_SIZE // 2)
+            y = (square // self.width) * constants.CELL_SIZE + (constants.CELL_SIZE // 2)
+            path_arr.append((x, y))
+        
+        # draw lines on screen from start to end
+        path_arr.reverse()
+        for i in range(1, len(path_arr)):
+            pygame.draw.line(self.screen, constants.BLACK, path_arr[i-1], path_arr[i], 3)
+            time.sleep(constants.LINE_DELAY)
+            pygame.display.flip()
+        
     # Organizes the generation process.          
     def generate_maze(self):
         self.draw_grid()
         time.sleep(2)
         self.kruskals_algorithm()
         self.draw_grid()
+        self.draw_bfs_path()
