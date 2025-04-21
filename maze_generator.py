@@ -21,17 +21,22 @@ class MazeGenerator:
         self.end = (width - 1, height - 1)
         self.init_grid()
     
-    # Creates all possible walls
+    # Creates all possible walls with random weights
     def init_grid(self):
         for y in range(self.height):
             for x in range (self.width):
                 cell_id = y * self.width + x
                 if x < self.width - 1:
-                    self.walls.append((cell_id, cell_id + 1))
+                    # Assign random weight between 1 and 100
+                    weight = random.randint(1, 100)
+                    self.walls.append((weight, cell_id, cell_id + 1))
                 if y < self.height - 1:
-                    self.walls.append((cell_id, cell_id + self.width))
-        random.shuffle(self.walls)
+                    weight = random.randint(1, 100)
+                    self.walls.append((weight, cell_id, cell_id + self.width))
+        # Sort walls by weight (ascending)
+        self.walls.sort(key=lambda x: x[0])
         self.cells = [(x, y) for y in range(self.height) for x in range(self.width)]
+    
     # Draws cells and walls
     def draw_grid(self):
         self.screen.fill(constants.WHITE)
@@ -52,15 +57,17 @@ class MazeGenerator:
         end_x, end_y = self.end
         pygame.draw.rect(self.screen, constants.RED, (end_x * constants.CELL_SIZE + 2, end_y * constants.CELL_SIZE + 2, constants.CELL_SIZE - 4, constants.CELL_SIZE - 4))
         pygame.display.flip()
-    # Removes the walls and actually builds the maze
+    
+    # Removes the walls and actually builds the maze using weights
     def kruskals_algorithm(self):
         ds = DisjointSet(self.width * self.height)
-        for u, v in self.walls:
+        for weight, u, v in self.walls:
             if ds.union(u, v):
                 self.maze_edges.append((u, v))
                 self.maze_edges.append((v, u))
                 self.draw_grid()
                 time.sleep(constants.STEP_DELAY)
+    
     # Organizes the generation process.          
     def generate_maze(self):
         self.draw_grid()
