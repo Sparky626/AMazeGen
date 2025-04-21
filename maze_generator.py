@@ -28,10 +28,10 @@ class MazeGenerator:
                 cell_id = y * self.width + x
                 if x < self.width - 1:
                     # Assign random weight between 1 and 100
-                    weight = random.randint(1, 100)
+                    weight = random.randint(1, 10)
                     self.walls.append((weight, cell_id, cell_id + 1))
                 if y < self.height - 1:
-                    weight = random.randint(1, 100)
+                    weight = random.randint(1, 10)
                     self.walls.append((weight, cell_id, cell_id + self.width))
         # Sort walls by weight (ascending)
         self.walls.sort(key=lambda x: x[0])
