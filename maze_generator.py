@@ -66,8 +66,9 @@ class MazeGenerator:
             if ds.union(u, v):
                 self.maze_edges.append((u, v))
                 self.maze_edges.append((v, u))
-                self.draw_grid()
-                time.sleep(constants.STEP_DELAY)
+                # Uncomment below to see wall removal at each step, will slow down exec of algorithm at higher grid sizes
+                # self.draw_grid()           
+                # time.sleep(constants.STEP_DELAY)
     
     def bfs(self):
         # init adjacency list
@@ -114,7 +115,7 @@ class MazeGenerator:
         # draw lines on screen from start to end
         path_arr.reverse()
         for i in range(1, len(path_arr)):
-            pygame.draw.line(self.screen, constants.BLACK, path_arr[i-1], path_arr[i], 3)
+            pygame.draw.line(self.screen, constants.BLACK, path_arr[i-1], path_arr[i], constants.LINE_WIDTH)
             time.sleep(constants.LINE_DELAY)
             pygame.display.flip()
         
@@ -122,6 +123,10 @@ class MazeGenerator:
     def generate_maze(self):
         self.draw_grid()
         time.sleep(2)
+        start_time = time.perf_counter()
+        # Code to measure
         self.kruskals_algorithm()
+        end_time = time.perf_counter()
+        print(f"Execution time: {(end_time - start_time):.4f} seconds")
         self.draw_grid()
         self.draw_bfs_path()
