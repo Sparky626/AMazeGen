@@ -1,6 +1,6 @@
 # COP4533 - Final Project - AMazeGenerator (Kruskal's MST Algorithm)
 
-This project is for UF's Algorithm Abstraction and Design Class and uses Kruskal's Algorithm to generate a Maze which is basically a Minimum Spanning Tree.
+This project is for UF's Algorithm Abstraction and Design Class and uses Kruskal's Algorithm to generate a Maze which is essentially a Minimum Spanning Tree.
 
 ## How to Run
 Run `main.py` to view output.

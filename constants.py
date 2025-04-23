@@ -1,6 +1,6 @@
 CELL_SIZE = 20  # size of each cell in grid
-GRID_WIDTH = 50 # width of grid in cell size
-GRID_HEIGHT = 50 # height of grid in cell size
+GRID_WIDTH = 30 # width of grid in cell size
+GRID_HEIGHT = 30 # height of grid in cell size
 # dimensions for the pygame window
 WINDOW_WIDTH = GRID_WIDTH * CELL_SIZE
 WINDOW_HEIGHT = GRID_HEIGHT * CELL_SIZE

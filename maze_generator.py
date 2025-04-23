@@ -4,6 +4,7 @@ import time
 import constants
 from disjoint_set import DisjointSet
 from collections import deque
+import tracemalloc
 
 # Initializing Pygame (for Maze Visuals)
 pygame.init()
@@ -123,10 +124,19 @@ class MazeGenerator:
     def generate_maze(self):
         self.draw_grid()
         time.sleep(2)
+
+        tracemalloc.start()
+
+        # Measurements for time and memory usage of Kruskal's algorithm
         start_time = time.perf_counter()
         # Code to measure
-        self.kruskals_algorithm()
+        self.kruskals_algorithm()   # Execute the algorithm
         end_time = time.perf_counter()
-        print(f"Execution time: {(end_time - start_time):.4f} seconds")
+        print(f"Execution time: {(end_time - start_time):.4f} seconds") # Execution time
+        current, peak = tracemalloc.get_traced_memory()
+        tracemalloc.stop()
+        # print(f"Current memory usage: {current/1e6:.3f} MB") # Current memory usage (not needed)
+        print(f"Peak memory usage:    {peak/1e6:.3f} MB") # Peak memory usage
+
         self.draw_grid()
         self.draw_bfs_path()
