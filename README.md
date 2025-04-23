@@ -18,8 +18,6 @@ Run `main.py` to view output.
 - `WHITE`, `BLACK`, `GREEN`, `RED`: RGB color values for rendering the maze, walls, start/end points, and BFS path.
 
 ## Functions
-The project is organized into several key files with the following functions:
-
 ### `disjoint_set.py`
 - `DisjointSet.__init__(size)`: Initializes a disjoint set for `size` cells, with each cell as its own set.
 - `DisjointSet.find(x)`: Finds the root of the set containing cell `x` using path compression.
@@ -38,8 +36,6 @@ The project is organized into several key files with the following functions:
 - `main()`: Initializes the maze generator, runs the maze generation process, and handles the Pygame event loop.
 
 ## How it Works
-The project generates a maze using Kruskal's algorithm to create a minimum spanning tree, ensuring a unique path between any two cells. Here's an overview:
-
 1. **Grid Initialization**: A grid of cells is created with walls (horizontal and vertical) assigned random weights between 1 and 10.
 2. **Kruskal's Algorithm**: Walls are sorted by weight, and the algorithm iteratively removes walls to connect cells, using a `DisjointSet` to prevent cycles, forming a maze.
 3. **Visualization**: The maze is rendered in Pygame, with walls drawn as black lines, the start cell (0,0) in green, and the end cell (width-1, height-1) in red.
@@ -49,8 +45,8 @@ The project generates a maze using Kruskal's algorithm to create a minimum spann
 To view the implementation for different size grids, wall removal speeds, BFS line drawing speeds, etc., edit values in `constants.py`.
 
 To view the implementation at smaller grid sizes (such as 15 x 15), uncomment the following lines in `kruskals_algorithm()` in `maze_generator.py`:
+These are disabled by default to allow for larger input sizes to be run for testing.
 ```python
 # self.draw_grid()
 # time.sleep(constants.STEP_DELAY)
 ```
-These are disabled by default to allow for larger input sizes to be run for testing.
