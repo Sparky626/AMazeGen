@@ -66,7 +66,7 @@ class MazeGenerator:
             if ds.union(u, v):
                 self.maze_edges.append((u, v))
                 self.maze_edges.append((v, u))
-                # Uncomment below to see wall removal at each step, will slow down execution of algorithm at higher grid sizes
+                # Uncomment below to see wall removal at each step, slows down execution of algorithm at higher grid sizes
                 # self.draw_grid()           
                 # time.sleep(constants.STEP_DELAY)
     
